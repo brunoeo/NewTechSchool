@@ -5,6 +5,7 @@ import com.br.NewTechSchool.NewTechSchool.presentation.dto.ProfessorDTO;
 import com.br.NewTechSchool.NewTechSchool.presentation.util.AppResponse;
 import com.br.NewTechSchool.NewTechSchool.presentation.util.AppResponseData;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +33,9 @@ public class ProfessorController {
 
     @GetMapping
     @SuppressWarnings("unused")
-    public AppResponse<AppResponseData> findAll() {
+    public AppResponse<AppResponseData> findAll(Pageable pageable) {
         try {
-            return AppResponse.success(service.findAll(), "Busca realizada!", HttpStatus.OK);
+            return AppResponse.success(service.findAll(pageable), "Busca realizada!", HttpStatus.OK);
         } catch (Exception error) {
             error.printStackTrace();
             return AppResponse.error(error.getMessage(), HttpStatus.NOT_ACCEPTABLE);
