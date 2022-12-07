@@ -2,11 +2,8 @@ package com.br.NewTechSchool.data.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.SQLDelete;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "professors")
@@ -16,4 +13,6 @@ public class Professor extends AbstractPerson{
 
     @Column
     private String specialization;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "professor", orphanRemoval = true)
+    Course course;
 }

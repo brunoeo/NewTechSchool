@@ -2,8 +2,8 @@ package com.br.NewTechSchool.domain.services;
 
 import com.br.NewTechSchool.data.entities.Professor;
 import com.br.NewTechSchool.data.repositories.ProfessorRepository;
-import com.br.NewTechSchool.domain.mappers.ProfessorSmallMapper;
 import com.br.NewTechSchool.domain.mappers.ProfessorMapper;
+import com.br.NewTechSchool.domain.mappers.ProfessorSmallMapper;
 import com.br.NewTechSchool.presentation.dto.ProfessorDTO;
 import com.br.NewTechSchool.presentation.dto.ProfessorSmallPersonDTO;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -22,7 +21,6 @@ public class ProfessorService {
     private final ProfessorMapper mapper;
     private final ProfessorRepository professorRepository;
     private final ProfessorSmallMapper professorSmallMapper;
-
 
     @Transactional
     public ProfessorSmallPersonDTO save(ProfessorDTO professorDTO){
@@ -45,6 +43,8 @@ public class ProfessorService {
 
     public void delete(long id) throws Exception {
         Professor professor = this.findProfessor(id);
+        if (professor.getCourse() == null)
+            throw new Exception("Professor vinculado ao curso" + professor.getCourse().getName());
         professorRepository.delete(professor);
     }
 
@@ -55,12 +55,7 @@ public class ProfessorService {
     }
 
     private Professor findProfessor(Long id)throws Exception{
-        Optional<Professor> professor = professorRepository.findById(id);
-        if(professor.isPresent()){
-            return professor.get();
-        }else{
-            throw new Exception("Professor não encontrado!");
-        }
+        return this.professorRepository.findById(id).orElseThrow(()
+                -> new Exception("Professor não encontrado!"));
     }
-
 }

@@ -28,13 +28,14 @@ public class LoginController {
     private String expiration;
 
     @PostMapping
+    @SuppressWarnings("unused")
     public AppResponse<AppResponseData> login(@Valid @RequestBody LoginDTO loginDTO){
         try{
             userDetailsService.verifyUserCredentials(loginDTO);
             String token = jwtService.generateToken(loginDTO.getUsername());
             return AppResponse.success(new TokenDTO(token, expiration), "Login efetuado com sucesso!");
         }catch (Exception error){
-            return AppResponse.error(error.getMessage(), HttpStatus.OK);
+            return AppResponse.error(error.getMessage(), HttpStatus.UNAUTHORIZED);
         }
 
     }
