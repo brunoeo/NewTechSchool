@@ -4,6 +4,7 @@ import com.br.NewTechSchool.data.entities.Professor;
 import com.br.NewTechSchool.data.repositories.ProfessorRepository;
 import com.br.NewTechSchool.domain.mappers.ProfessorMapper;
 import com.br.NewTechSchool.domain.mappers.ProfessorSmallMapper;
+import com.br.NewTechSchool.presentation.dto.IDTO;
 import com.br.NewTechSchool.presentation.dto.ProfessorDTO;
 import com.br.NewTechSchool.presentation.dto.ProfessorSmallPersonDTO;
 import lombok.AllArgsConstructor;
@@ -16,21 +17,30 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ProfessorService {
+public class ProfessorService implements ICrudService{
 
     private final ProfessorMapper mapper;
     private final ProfessorRepository professorRepository;
     private final ProfessorSmallMapper professorSmallMapper;
 
     @Transactional
-    public ProfessorSmallPersonDTO save(ProfessorDTO professorDTO){
-        Professor professor = mapper.toObject(professorDTO);
+    public IDTO save(IDTO idto){
+        Professor professor = mapper.toObject((ProfessorDTO) idto);
         return professorSmallMapper.toDTO(professorRepository.save(professor));
     }
 
     public List<ProfessorSmallPersonDTO> findAll(Pageable pageable){
         List<ProfessorSmallPersonDTO> dtos = new ArrayList<>();
         professorRepository.findAll(pageable).forEach(
+                professor -> dtos.add(professorSmallMapper.toDTO(professor))
+        );
+        return dtos;
+    }
+
+    @Override
+    public List<? extends IDTO> findByName(String name, Pageable pageable) {
+        List<ProfessorSmallPersonDTO> dtos = new ArrayList<>();
+        professorRepository.findAllByNameContainingIgnoreCase(name, pageable).forEach(
                 professor -> dtos.add(professorSmallMapper.toDTO(professor))
         );
         return dtos;
@@ -43,14 +53,14 @@ public class ProfessorService {
 
     public void delete(long id) throws Exception {
         Professor professor = this.findProfessor(id);
-        if (professor.getCourse() == null)
-            throw new Exception("Professor vinculado ao curso" + professor.getCourse().getName());
+        if (professor.getCourse() != null)
+            throw new Exception("Professor vinculado ao curso " + professor.getCourse().getName());
         professorRepository.delete(professor);
     }
 
-    public ProfessorDTO update(long id, ProfessorDTO professorDTO) throws Exception {
+    public IDTO update(long id, IDTO idto) throws Exception {
         Professor professor = this.findProfessor(id);
-        mapper.putData(professor, professorDTO);
+        mapper.putData(professor, (ProfessorDTO) idto);
         return mapper.toDTO(professorRepository.save(professor));
     }
 

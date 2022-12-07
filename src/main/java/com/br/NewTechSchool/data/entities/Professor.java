@@ -13,6 +13,6 @@ public class Professor extends AbstractPerson{
 
     @Column
     private String specialization;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "professor", orphanRemoval = true)
+    @OneToOne(mappedBy = "professor", orphanRemoval = true)
     Course course;
 }
