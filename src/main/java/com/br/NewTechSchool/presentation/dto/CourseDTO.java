@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class CourseDTO implements IDTO{
+public class CourseDTO implements IDTO {
     private Long id;
     @NotBlank(message = "{name.not.blank}")
     private String name;

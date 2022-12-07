@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "courses")
-public class Course  extends AbstractEntity{
+public class Course extends AbstractEntity {
 
     @Column(unique = true)
     private String name;
@@ -20,6 +20,6 @@ public class Course  extends AbstractEntity{
     @Column
     private Double monthlyFee;
     @OneToOne
-    @JoinColumn(name="professor_id", referencedColumnName = "id")
+    @JoinColumn(name = "professor_id", referencedColumnName = "id")
     private Professor professor;
 }

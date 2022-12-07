@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("hello")
+@SuppressWarnings("unused")
 public class HelloWorldController {
 
-
     @GetMapping
-    public AppResponse<AppResponseData> hello(){
+    public AppResponse<AppResponseData> hello() {
 
         return AppResponse.success("Hello World", HttpStatus.OK);
     }

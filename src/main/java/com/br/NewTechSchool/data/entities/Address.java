@@ -3,13 +3,15 @@ package com.br.NewTechSchool.data.entities;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Addresses")
 @Getter
 @Setter
-public class Address  extends AbstractEntity{
+public class Address extends AbstractEntity {
 
     @Column
     private String cep;

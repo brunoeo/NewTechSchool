@@ -6,10 +6,11 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebSecurity
+@SuppressWarnings("unused")
 public class CorsApplication {
     @Bean
-    public WebMvcConfigurer corsConfigurer(){
-        return new WebMvcConfigurer(){
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry

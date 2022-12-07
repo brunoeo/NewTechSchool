@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Component
+@SuppressWarnings("unused")
 public class SetDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     boolean alreadySetup = false;
@@ -25,7 +26,7 @@ public class SetDataLoader implements ApplicationListener<ContextRefreshedEvent>
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
-        if (!alreadySetup){
+        if (!alreadySetup) {
             Credential credential = new Credential();
             credential.setPassword(passwordEncoder.encode("123456"));
             credential.setUserName("teste@gmail.com");
@@ -34,10 +35,10 @@ public class SetDataLoader implements ApplicationListener<ContextRefreshedEvent>
         }
     }
 
-    private void createUserIfNotFound(Credential root){
+    private void createUserIfNotFound(Credential root) {
 
         Optional<Credential> user = credentialRepository.findByUserName(root.getUsername());
-        if (user.isEmpty()){
+        if (user.isEmpty()) {
             credentialRepository.save(root);
         }
     }

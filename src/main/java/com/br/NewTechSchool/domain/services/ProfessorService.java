@@ -17,19 +17,19 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ProfessorService implements ICrudService{
+public class ProfessorService implements ICrudService {
 
     private final ProfessorMapper mapper;
     private final ProfessorRepository professorRepository;
     private final ProfessorSmallMapper professorSmallMapper;
 
     @Transactional
-    public IDTO save(IDTO idto){
+    public IDTO save(IDTO idto) {
         Professor professor = mapper.toObject((ProfessorDTO) idto);
         return professorSmallMapper.toDTO(professorRepository.save(professor));
     }
 
-    public List<ProfessorSmallPersonDTO> findAll(Pageable pageable){
+    public List<ProfessorSmallPersonDTO> findAll(Pageable pageable) {
         List<ProfessorSmallPersonDTO> dtos = new ArrayList<>();
         professorRepository.findAll(pageable).forEach(
                 professor -> dtos.add(professorSmallMapper.toDTO(professor))
@@ -64,7 +64,7 @@ public class ProfessorService implements ICrudService{
         return mapper.toDTO(professorRepository.save(professor));
     }
 
-    private Professor findProfessor(Long id)throws Exception{
+    private Professor findProfessor(Long id) throws Exception {
         return this.professorRepository.findById(id).orElseThrow(()
                 -> new Exception("Professor não encontrado!"));
     }

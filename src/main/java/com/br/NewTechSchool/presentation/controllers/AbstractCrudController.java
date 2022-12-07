@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @MappedSuperclass
 @SuppressWarnings("unused")
-public abstract class AbstractCrudController<I extends IDTO>{
+public abstract class AbstractCrudController<I extends IDTO> {
 
     protected final ICrudService service;
 
@@ -22,58 +22,58 @@ public abstract class AbstractCrudController<I extends IDTO>{
     }
 
     @PostMapping
-    public AppResponse<AppResponseData> save(@Valid @RequestBody I idto){
-        try{
+    public AppResponse<AppResponseData> save(@Valid @RequestBody I idto) {
+        try {
             return AppResponse.success(service.save(idto), "Saved successfully");
-        }catch (Exception error){
+        } catch (Exception error) {
             return AppResponse.error(error.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
 
     }
 
     @GetMapping
-    public AppResponse<AppResponseData> findAll(Pageable pageable){
-        try{
+    public AppResponse<AppResponseData> findAll(Pageable pageable) {
+        try {
             return AppResponse.success(service.findAll(pageable), "Search done", HttpStatus.OK);
-        }catch (Exception error){
+        } catch (Exception error) {
             return AppResponse.error(error.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
     @GetMapping("/name/{name}")
-    public AppResponse<AppResponseData> findByName(@PathVariable("name") String name, Pageable pageable){
-        try{
+    public AppResponse<AppResponseData> findByName(@PathVariable("name") String name, Pageable pageable) {
+        try {
             return AppResponse.success(service.findByName(name, pageable), "Search done", HttpStatus.OK);
-        }catch (Exception error) {
+        } catch (Exception error) {
             return AppResponse.error(error.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/{id}")
-    public AppResponse<AppResponseData> findOne(@PathVariable("id") long id){
-        try{
+    public AppResponse<AppResponseData> findOne(@PathVariable("id") long id) {
+        try {
             return AppResponse.success(service.findOne(id), "Search done", HttpStatus.OK);
-        }catch (Exception error) {
+        } catch (Exception error) {
             return AppResponse.error(error.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
     @PutMapping("/{id}")
-    public AppResponse<AppResponseData> update(@PathVariable("id") long id, @Valid @RequestBody I idto){
-        try{
+    public AppResponse<AppResponseData> update(@PathVariable("id") long id, @Valid @RequestBody I idto) {
+        try {
             return AppResponse.success(service.update(id, idto),
                     "Update successfully", HttpStatus.OK);
-        }catch (Exception error) {
+        } catch (Exception error) {
             return AppResponse.error(error.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/{id}")
-    public AppResponse<AppResponseData> delete(@PathVariable("id") long id){
-        try{
+    public AppResponse<AppResponseData> delete(@PathVariable("id") long id) {
+        try {
             service.delete(id);
             return AppResponse.success("Deletion performed!", HttpStatus.OK);
-        }catch (Exception error) {
+        } catch (Exception error) {
             return AppResponse.error(error.getMessage(), HttpStatus.NOT_FOUND);
         }
     }

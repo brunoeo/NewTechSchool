@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class TokenDTO implements IDTO{
+public class TokenDTO implements IDTO {
 
     private String accessToken;
     private String expiration;

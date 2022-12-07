@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @EnableWebSecurity
+@SuppressWarnings("unused")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -46,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     //Retorna um novo filtro
-    public OncePerRequestFilter jwtFilter(){
+    public OncePerRequestFilter jwtFilter() {
         return new JwtAuthFilter(jwtService, userDetailsService);
     }
 

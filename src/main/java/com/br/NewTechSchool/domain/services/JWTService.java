@@ -10,6 +10,7 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.Date;
+
 //Classe responsavel por criptografar e descriptografar o token
 @Service
 public class JWTService {
@@ -23,7 +24,7 @@ public class JWTService {
     //Valores dos atributos estão declarados no application.properties
 
     //Método responsável por gerar o token recebendo um userName
-    public String generateToken(String username){
+    public String generateToken(String username) {
 
         //Pega o tempo atual e adiciona o tempo de expiração do token
         Calendar currentTimeNow = Calendar.getInstance();
@@ -50,7 +51,7 @@ public class JWTService {
         return Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8));
     }
 
-    private Claims getClaims(String token){
+    private Claims getClaims(String token) {
         SecretKey secretKey = getSecretKey();
 
         //Com base no token criptografado e na chave, ele retorna o body descriptografado
@@ -58,7 +59,7 @@ public class JWTService {
                 .setSigningKey(secretKey).build()
                 .parseClaimsJws(token).getBody();
     }
-    
+
 
     public String getUserName(String token) {
         //Retonar o Subject, no caso o userName

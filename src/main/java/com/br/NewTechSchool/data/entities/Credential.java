@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "credentials")
 @Getter
 @Setter
-public class Credential  extends AbstractEntity implements UserDetails{
+public class Credential extends AbstractEntity implements UserDetails {
 
     @Column(unique = true)
     private String userName;
@@ -27,11 +27,6 @@ public class Credential  extends AbstractEntity implements UserDetails{
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles;
-    }
-
-    @Override
-    public String getPassword() {
-        return this.password;
     }
 
     @Override

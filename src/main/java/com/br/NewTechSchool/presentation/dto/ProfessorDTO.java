@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public class ProfessorDTO extends AbstractPersonDTO{
+public class ProfessorDTO extends AbstractPersonDTO {
     @NotBlank(message = "{specialization.not.blank}")
     private String specialization;
 }

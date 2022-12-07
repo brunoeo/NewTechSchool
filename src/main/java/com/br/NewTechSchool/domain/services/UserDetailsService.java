@@ -26,15 +26,15 @@ public class UserDetailsService implements org.springframework.security.core.use
         if (credential.isPresent()) {
             return credential.get();
         }
-        throw  new UsernameNotFoundException("Dados Invalidos");
+        throw new UsernameNotFoundException("Dados Invalidos");
 
     }
 
-    public void verifyUserCredentials(LoginDTO login){
-        UserDetails credential = loadUserByUsername(login.getUsername());
+    public void verifyUserCredentials(LoginDTO login) {
+        UserDetails credential = loadUserByUsername(login.getUserName());
         //Após a validação do username, retorna um usuario e agora verifica a senha criptografada
         boolean passwordIsTheSame = passwordEncoder.matches(login.getPassword(), credential.getPassword());
-        if (!passwordIsTheSame){
+        if (!passwordIsTheSame) {
             throw new UsernameNotFoundException("Dados Invalidos");
         }
 

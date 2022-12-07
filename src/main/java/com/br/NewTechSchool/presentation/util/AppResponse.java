@@ -11,22 +11,24 @@ public class AppResponse<T extends AppResponseData> extends ResponseEntity<T> {
     public AppResponse(T body, HttpStatus status) {
         super(body, status);
     }
-    public static AppResponse<AppResponseData> success(String message, HttpStatus status){
+
+    public static AppResponse<AppResponseData> success(String message, HttpStatus status) {
         return new AppResponse<>(new AppResponseData(message), status);
     }
-    public static AppResponse<AppResponseData> success(IDTO body, String message){
+
+    public static AppResponse<AppResponseData> success(IDTO body, String message) {
         return AppResponse.success(body, message, HttpStatus.OK);
     }
 
-    public static AppResponse<AppResponseData> success(List<? extends IDTO> body, String message, HttpStatus status){
+    public static AppResponse<AppResponseData> success(List<? extends IDTO> body, String message, HttpStatus status) {
         return new AppResponse<>(new AppResponseData(message, body), status);
     }
 
-    public static AppResponse<AppResponseData> success(IDTO body, String message, HttpStatus status){
+    public static AppResponse<AppResponseData> success(IDTO body, String message, HttpStatus status) {
         return new AppResponse<>(new AppResponseData(message, body), status);
     }
 
-    public static AppResponse<AppResponseData> error(String message, HttpStatus status){
+    public static AppResponse<AppResponseData> error(String message, HttpStatus status) {
         return new AppResponse<>(new AppResponseData(message), status);
     }
 

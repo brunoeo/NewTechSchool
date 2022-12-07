@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
-public class ProfessorMapper {
+public class ProfessorMapper implements IMapper<Professor, ProfessorDTO> {
 
     @Autowired
+    @SuppressWarnings("unused")
     private PasswordEncoder passwordEncoder;
 
-    public Professor toObject(ProfessorDTO professorDTO){
+    public Professor toObject(ProfessorDTO professorDTO) {
         Professor professor = new Professor();
         Credential credential = new Credential();
         Address address = new Address();
@@ -39,7 +40,7 @@ public class ProfessorMapper {
         return professor;
     }
 
-    public ProfessorDTO toDTO(Professor professor){
+    public ProfessorDTO toDTO(Professor professor) {
         ProfessorDTO professorDTO = new ProfessorDTO();
         professorDTO.setSpecialization(professor.getSpecialization());
         professorDTO.setId(professor.getId());
@@ -57,7 +58,7 @@ public class ProfessorMapper {
         return professorDTO;
     }
 
-    public void putData(Professor professor, ProfessorDTO professorDTO){
+    public void putData(Professor professor, ProfessorDTO professorDTO) {
         professor.setSpecialization(professorDTO.getSpecialization());
         professor.setCpf(professorDTO.getCpf());
         professor.setName(professorDTO.getName());

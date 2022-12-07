@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class CourseService implements ICrudService{
+public class CourseService implements ICrudService {
 
     private final CourseMapper mapper;
     private final CourseRepository repository;
@@ -26,11 +26,11 @@ public class CourseService implements ICrudService{
     @Transactional
     public IDTO save(IDTO idto) throws Exception {
         Course course = mapper.toObject((CourseDTO) idto);
-        course.setProfessor(this.professorValidator((CourseDTO) idto));
+        course.setProfessor(this.validator((CourseDTO) idto));
         return mapper.toDTO(repository.save(course));
     }
 
-    public List<CourseDTO> findAll(Pageable pageable){
+    public List<CourseDTO> findAll(Pageable pageable) {
         List<CourseDTO> dtos = new ArrayList<>();
         repository.findAll(pageable).forEach(
                 course -> dtos.add(mapper.toDTO(course))
@@ -59,12 +59,12 @@ public class CourseService implements ICrudService{
 
     public IDTO update(long id, IDTO idto) throws Exception {
         Course course = this.findCourse(id);
-        course.setProfessor(this.professorValidator((CourseDTO) idto));
+        course.setProfessor(this.validator((CourseDTO) idto));
         mapper.putData(course, (CourseDTO) idto);
         return mapper.toDTO(repository.save(course));
     }
 
-    private Professor professorValidator(CourseDTO courseDTO)throws Exception{
+    private Professor validator(CourseDTO courseDTO) throws Exception {
         if (courseDTO.getProfessorId() == null) return null;
 
         Professor professor = professorRepository.findById(courseDTO.getProfessorId()).orElseThrow(
@@ -76,7 +76,7 @@ public class CourseService implements ICrudService{
         return professor;
     }
 
-    private Course findCourse(Long id)throws Exception{
+    private Course findCourse(Long id) throws Exception {
         return repository.findById(id).orElseThrow(
                 () -> new Exception("Curso não encontrado!"));
     }

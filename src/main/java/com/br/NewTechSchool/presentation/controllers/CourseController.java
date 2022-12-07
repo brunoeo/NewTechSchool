@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("course")
 @SuppressWarnings("unused")
-public class CourseController extends AbstractCrudController<CourseDTO>{
+public class CourseController extends AbstractCrudController<CourseDTO> {
 
     public CourseController(CourseService service) {
         super(service);

@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public abstract class SmallPersonDTO implements IDTO{
+public abstract class SmallPersonDTO implements IDTO {
 
     private Long id;
     @NotBlank(message = "{name.not.blank}")

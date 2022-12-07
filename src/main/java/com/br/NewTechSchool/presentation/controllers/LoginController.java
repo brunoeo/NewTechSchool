@@ -29,12 +29,12 @@ public class LoginController {
 
     @PostMapping
     @SuppressWarnings("unused")
-    public AppResponse<AppResponseData> login(@Valid @RequestBody LoginDTO loginDTO){
-        try{
+    public AppResponse<AppResponseData> login(@Valid @RequestBody LoginDTO loginDTO) {
+        try {
             userDetailsService.verifyUserCredentials(loginDTO);
-            String token = jwtService.generateToken(loginDTO.getUsername());
+            String token = jwtService.generateToken(loginDTO.getUserName());
             return AppResponse.success(new TokenDTO(token, expiration), "Login efetuado com sucesso!");
-        }catch (Exception error){
+        } catch (Exception error) {
             return AppResponse.error(error.getMessage(), HttpStatus.UNAUTHORIZED);
         }
 

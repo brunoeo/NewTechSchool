@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class AbstractPerson extends AbstractEntity{
+public abstract class AbstractPerson extends AbstractEntity {
 
     @Column
     private String name;

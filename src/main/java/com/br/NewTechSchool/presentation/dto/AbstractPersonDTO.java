@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-public abstract class AbstractPersonDTO extends SmallPersonDTO{
+public abstract class AbstractPersonDTO extends SmallPersonDTO {
 
     @Pattern(regexp = "(^\\d{1,2}).?(\\d{3}).?(\\d{3})-?(\\d{1}|X|x$)", message = "{rg.not.valid}")
     private String rg;
