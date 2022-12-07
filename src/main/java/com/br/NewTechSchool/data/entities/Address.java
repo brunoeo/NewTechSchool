@@ -9,11 +9,8 @@ import javax.persistence.*;
 @Table(name = "Addresses")
 @Getter
 @Setter
-public class Address {
+public class Address  extends AbstractEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
     @Column
     private String cep;
     @Column

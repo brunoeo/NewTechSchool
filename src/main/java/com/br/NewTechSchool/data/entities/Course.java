@@ -9,12 +9,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "courses")
-public class Course {
+public class Course  extends AbstractEntity{
 
-    @Id
-    @GeneratedValue
-    private Long id;
-    @Column
+    @Column(unique = true)
     private String name;
     @Column
     private int duration;
@@ -22,7 +19,7 @@ public class Course {
     private String modality;
     @Column
     private Double monthlyFee;
-    @OneToOne(orphanRemoval = true, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name="professor_id", referencedColumnName = "id")
     private Professor professor;
 }

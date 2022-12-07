@@ -6,6 +6,7 @@ import com.br.NewTechSchool.data.repositories.CourseRepository;
 import com.br.NewTechSchool.data.repositories.ProfessorRepository;
 import com.br.NewTechSchool.domain.mappers.CourseMapper;
 import com.br.NewTechSchool.presentation.dto.CourseDTO;
+import com.br.NewTechSchool.presentation.dto.IDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,27 +14,34 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class CourseService {
+public class CourseService implements ICrudService{
 
     private final CourseMapper mapper;
     private final CourseRepository repository;
     private final ProfessorRepository professorRepository;
 
-
     @Transactional
-    public CourseDTO save(CourseDTO courseDTO) throws Exception {
-        Course course = mapper.toObject(courseDTO);
-        course.setProfessor(this.findProfessor(courseDTO.getProfessorId()));
+    public IDTO save(IDTO idto) throws Exception {
+        Course course = mapper.toObject((CourseDTO) idto);
+        course.setProfessor(this.professorValidator((CourseDTO) idto));
         return mapper.toDTO(repository.save(course));
     }
 
     public List<CourseDTO> findAll(Pageable pageable){
         List<CourseDTO> dtos = new ArrayList<>();
         repository.findAll(pageable).forEach(
+                course -> dtos.add(mapper.toDTO(course))
+        );
+        return dtos;
+    }
+
+    @Override
+    public List<? extends IDTO> findByName(String name, Pageable pageable) {
+        List<CourseDTO> dtos = new ArrayList<>();
+        repository.findAllByNameContainingIgnoreCase(name, pageable).forEach(
                 course -> dtos.add(mapper.toDTO(course))
         );
         return dtos;
@@ -49,28 +57,28 @@ public class CourseService {
         repository.delete(course);
     }
 
-    public CourseDTO update(long id, CourseDTO courseDTO) throws Exception {
+    public IDTO update(long id, IDTO idto) throws Exception {
         Course course = this.findCourse(id);
-        course.setProfessor(this.findProfessor(courseDTO.getProfessorId()));
-        mapper.putData(course, courseDTO);
+        course.setProfessor(this.professorValidator((CourseDTO) idto));
+        mapper.putData(course, (CourseDTO) idto);
         return mapper.toDTO(repository.save(course));
     }
 
-    private Professor findProfessor(Long id)throws Exception{
-        Optional<Professor> professor = professorRepository.findById(id);
-        if(professor.isPresent()){
-            return professor.get();
-        }else{
-            throw new Exception("Professor não encontrado!");
-        }
+    private Professor professorValidator(CourseDTO courseDTO)throws Exception{
+        if (courseDTO.getProfessorId() == null) return null;
+
+        Professor professor = professorRepository.findById(courseDTO.getProfessorId()).orElseThrow(
+                () -> new Exception("Professor não encontrado!"));
+
+        if (professor.getCourse() != null)
+            throw new Exception("Professor já cadastrado ao curso " + professor.getCourse().getName() + "!");
+
+        return professor;
     }
 
     private Course findCourse(Long id)throws Exception{
-        Optional<Course> course = repository.findById(id);
-        if(course.isPresent()){
-            return course.get();
-        }else{
-            throw new Exception("Curso não encontrado!");
-        }
+        return repository.findById(id).orElseThrow(
+                () -> new Exception("Curso não encontrado!"));
     }
+
 }

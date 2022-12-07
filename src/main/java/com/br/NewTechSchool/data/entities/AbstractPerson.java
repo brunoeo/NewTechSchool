@@ -10,11 +10,8 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class AbstractPerson {
+public abstract class AbstractPerson extends AbstractEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
     @Column
     private String name;
     @Column(unique = true)
@@ -35,6 +32,5 @@ public abstract class AbstractPerson {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "credential_id", referencedColumnName = "id")
     private Credential credential;
-
 
 }

@@ -11,11 +11,8 @@ import javax.persistence.*;
 @Table(name = "roles")
 @Getter
 @Setter
-public class Role implements GrantedAuthority {
+public class Role  extends AbstractEntity implements GrantedAuthority {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
     @Column
     private String type;
 

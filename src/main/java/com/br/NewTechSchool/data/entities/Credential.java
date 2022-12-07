@@ -14,11 +14,7 @@ import java.util.List;
 @Table(name = "credentials")
 @Getter
 @Setter
-public class Credential implements UserDetails {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+public class Credential  extends AbstractEntity implements UserDetails{
 
     @Column(unique = true)
     private String userName;
