@@ -7,8 +7,10 @@ import com.br.NewTechSchool.data.repositories.ProfessorRepository;
 import com.br.NewTechSchool.domain.mappers.CourseMapper;
 import com.br.NewTechSchool.presentation.dto.CourseDTO;
 import com.br.NewTechSchool.presentation.dto.IDTO;
+import com.br.NewTechSchool.presentation.util.ExceptionResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,17 +70,20 @@ public class CourseService implements ICrudService {
         if (courseDTO.getProfessorId() == null) return null;
 
         Professor professor = professorRepository.findById(courseDTO.getProfessorId()).orElseThrow(
-                () -> new Exception("Professor não encontrado!"));
+                () -> new ExceptionResponse("Professor não encontrado!", HttpStatus.NOT_FOUND));
 
         if (professor.getCourse() != null)
-            throw new Exception("Professor já cadastrado ao curso " + professor.getCourse().getName() + "!");
+            throw new ExceptionResponse(
+                    "Professor já cadastrado ao curso " +
+                            professor.getCourse().getName() + "!",
+                    HttpStatus.BAD_REQUEST);
 
         return professor;
     }
 
     private Course findCourse(Long id) throws Exception {
         return repository.findById(id).orElseThrow(
-                () -> new Exception("Curso não encontrado!"));
+                () -> new ExceptionResponse("Curso não encontrado!", HttpStatus.NOT_FOUND));
     }
 
 }

@@ -11,29 +11,29 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class AppResponseData {
+public class DataResponse {
 
     private String message;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty("data")
     private Object data;
 
-    public AppResponseData(String message, IDTO data) {
+    public DataResponse(String message, IDTO data) {
         this.message = message;
         this.data = data;
     }
 
-    public AppResponseData(String message, List<? extends IDTO> data) {
+    public DataResponse(String message, List<? extends IDTO> data) {
         this.message = message;
         this.data = data;
     }
 
-    public AppResponseData(Map<String, String> data, String message) {
+    public DataResponse(Map<String, String> data, String message) {
         this.message = message;
         this.data = data;
     }
 
-    public AppResponseData(String message) {
+    public DataResponse(String message) {
         this.message = message;
     }
 
