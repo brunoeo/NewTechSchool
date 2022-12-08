@@ -12,11 +12,11 @@ public class CourseDTO implements IDTO {
     private Long id;
     @NotBlank(message = "{name.not.blank}")
     private String name;
-    @NotNull
+    @NotNull(message = "{duration.not.NotNull}")
     private int duration;
-    @NotBlank
+    @NotBlank(message = "{modality.not.blank}")
     private String modality;
-    @NotNull
+    @NotNull(message = "{monthlyFee.not.NotNull}")
     private Double monthlyFee;
     private Long professorId;
 }
