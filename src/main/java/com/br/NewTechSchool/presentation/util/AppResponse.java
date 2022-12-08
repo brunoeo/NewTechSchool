@@ -6,30 +6,30 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public class AppResponse<T extends AppResponseData> extends ResponseEntity<T> {
+public class AppResponse<T extends DataResponse> extends ResponseEntity<T> {
 
     public AppResponse(T body, HttpStatus status) {
         super(body, status);
     }
 
-    public static AppResponse<AppResponseData> success(String message, HttpStatus status) {
-        return new AppResponse<>(new AppResponseData(message), status);
+    public static AppResponse<DataResponse> success(String message, HttpStatus status) {
+        return new AppResponse<>(new DataResponse(message), status);
     }
 
-    public static AppResponse<AppResponseData> success(IDTO body, String message) {
+    public static AppResponse<DataResponse> success(IDTO body, String message) {
         return AppResponse.success(body, message, HttpStatus.OK);
     }
 
-    public static AppResponse<AppResponseData> success(List<? extends IDTO> body, String message, HttpStatus status) {
-        return new AppResponse<>(new AppResponseData(message, body), status);
+    public static AppResponse<DataResponse> success(List<? extends IDTO> body, String message, HttpStatus status) {
+        return new AppResponse<>(new DataResponse(message, body), status);
     }
 
-    public static AppResponse<AppResponseData> success(IDTO body, String message, HttpStatus status) {
-        return new AppResponse<>(new AppResponseData(message, body), status);
+    public static AppResponse<DataResponse> success(IDTO body, String message, HttpStatus status) {
+        return new AppResponse<>(new DataResponse(message, body), status);
     }
 
-    public static AppResponse<AppResponseData> error(String message, HttpStatus status) {
-        return new AppResponse<>(new AppResponseData(message), status);
+    public static AppResponse<DataResponse> error(String message, HttpStatus status) {
+        return new AppResponse<>(new DataResponse(message), status);
     }
 
 }

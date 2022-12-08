@@ -7,8 +7,10 @@ import com.br.NewTechSchool.domain.mappers.ProfessorSmallMapper;
 import com.br.NewTechSchool.presentation.dto.IDTO;
 import com.br.NewTechSchool.presentation.dto.ProfessorDTO;
 import com.br.NewTechSchool.presentation.dto.ProfessorSmallPersonDTO;
+import com.br.NewTechSchool.presentation.util.ExceptionResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,7 +56,10 @@ public class ProfessorService implements ICrudService {
     public void delete(long id) throws Exception {
         Professor professor = this.findProfessor(id);
         if (professor.getCourse() != null)
-            throw new Exception("Professor vinculado ao curso " + professor.getCourse().getName());
+            throw new ExceptionResponse(
+                    "Professor vinculado ao curso " +
+                            professor.getCourse().getName(),
+                    HttpStatus.BAD_REQUEST);
         professorRepository.delete(professor);
     }
 
@@ -66,6 +71,6 @@ public class ProfessorService implements ICrudService {
 
     private Professor findProfessor(Long id) throws Exception {
         return this.professorRepository.findById(id).orElseThrow(()
-                -> new Exception("Professor não encontrado!"));
+                -> new ExceptionResponse("Professor não encontrado!", HttpStatus.NOT_FOUND));
     }
 }

@@ -5,10 +5,10 @@ import com.br.NewTechSchool.domain.services.UserDetailsService;
 import com.br.NewTechSchool.presentation.dto.LoginDTO;
 import com.br.NewTechSchool.presentation.dto.TokenDTO;
 import com.br.NewTechSchool.presentation.util.AppResponse;
-import com.br.NewTechSchool.presentation.util.AppResponseData;
+import com.br.NewTechSchool.presentation.util.DataResponse;
+import com.br.NewTechSchool.presentation.util.ExceptionResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,14 +29,9 @@ public class LoginController {
 
     @PostMapping
     @SuppressWarnings("unused")
-    public AppResponse<AppResponseData> login(@Valid @RequestBody LoginDTO loginDTO) {
-        try {
-            userDetailsService.verifyUserCredentials(loginDTO);
-            String token = jwtService.generateToken(loginDTO.getUserName());
-            return AppResponse.success(new TokenDTO(token, expiration), "Login efetuado com sucesso!");
-        } catch (Exception error) {
-            return AppResponse.error(error.getMessage(), HttpStatus.UNAUTHORIZED);
-        }
-
+    public AppResponse<DataResponse> login(@Valid @RequestBody LoginDTO loginDTO) throws ExceptionResponse {
+        userDetailsService.verifyUserCredentials(loginDTO);
+        String token = jwtService.generateToken(loginDTO.getUserName());
+        return AppResponse.success(new TokenDTO(token, expiration), "Login efetuado com sucesso!");
     }
 }
