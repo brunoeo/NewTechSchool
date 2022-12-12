@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public class AppResponse<T extends DataResponse> extends ResponseEntity<T> {
 
@@ -30,6 +31,10 @@ public class AppResponse<T extends DataResponse> extends ResponseEntity<T> {
 
     public static AppResponse<DataResponse> error(String message, HttpStatus status) {
         return new AppResponse<>(new DataResponse(message), status);
+    }
+
+    public static AppResponse<DataResponse> error(Map<String, String> data, String message, HttpStatus status) {
+        return new AppResponse<>(new DataResponse(data, message), status);
     }
 
 }
