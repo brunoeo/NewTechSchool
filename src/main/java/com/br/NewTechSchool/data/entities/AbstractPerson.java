@@ -15,7 +15,7 @@ public abstract class AbstractPerson extends AbstractEntity {
     @Column
     private String name;
     @Column(unique = true)
-    @Size(max = 9)
+    @Size(max = 12)
     private String rg;
     @Column(unique = true)
     @CPF

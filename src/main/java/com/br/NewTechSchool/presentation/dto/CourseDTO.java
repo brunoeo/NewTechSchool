@@ -19,4 +19,5 @@ public class CourseDTO implements IDTO {
     @NotNull(message = "{monthlyFee.not.NotNull}")
     private Double monthlyFee;
     private Long professorId;
+  private String professorName;
 }

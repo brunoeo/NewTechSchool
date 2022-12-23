@@ -20,6 +20,7 @@ public class CourseMapper implements IMapper<Course, CourseDTO> {
         courseDTO.setModality(course.getModality());
         if (course.getProfessor() != null) {
             courseDTO.setProfessorId(course.getProfessor().getId());
+          courseDTO.setProfessorName(course.getProfessor().getName());
         }
         return courseDTO;
     }
