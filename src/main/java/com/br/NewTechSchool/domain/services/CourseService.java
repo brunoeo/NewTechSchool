@@ -5,8 +5,10 @@ import com.br.NewTechSchool.data.entities.Professor;
 import com.br.NewTechSchool.data.repositories.CourseRepository;
 import com.br.NewTechSchool.data.repositories.ProfessorRepository;
 import com.br.NewTechSchool.domain.mappers.CourseMapper;
+import com.br.NewTechSchool.domain.mappers.StudentMapper;
 import com.br.NewTechSchool.presentation.dto.CourseDTO;
 import com.br.NewTechSchool.presentation.dto.IDTO;
+import com.br.NewTechSchool.presentation.dto.StudentDTO;
 import com.br.NewTechSchool.presentation.util.ExceptionResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +26,7 @@ public class CourseService implements ICrudService {
     private final CourseMapper mapper;
     private final CourseRepository repository;
     private final ProfessorRepository professorRepository;
+    private final StudentMapper studentMapper;
 
     @Transactional
     public IDTO save(IDTO idto) throws Exception {
@@ -84,6 +87,16 @@ public class CourseService implements ICrudService {
     private Course findCourse(Long id) throws Exception {
         return repository.findById(id).orElseThrow(
                 () -> new ExceptionResponse("Curso não encontrado!", HttpStatus.NOT_FOUND));
+    }
+
+    public List<StudentDTO> findStudents(long id) throws Exception {
+        Course course = this.findCourse(id);
+        List<StudentDTO> dtos = new ArrayList<>();
+
+        course.getStudents().forEach(
+                student -> dtos.add(studentMapper.toDTO(student))
+        );
+        return dtos;
     }
 
 }

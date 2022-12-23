@@ -1,13 +1,14 @@
 package com.br.NewTechSchool.data.repositories;
 
-import com.br.NewTechSchool.data.entities.Course;
+import com.br.NewTechSchool.data.entities.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CourseRepository extends JpaRepository<Course, Long> {
+public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    Page<Course> findAllByNameContainingIgnoreCase(String name, Pageable pageable);
+  Page<Student> findAllByNameContainingIgnoreCase(String name, Pageable pageable);
+
 }
