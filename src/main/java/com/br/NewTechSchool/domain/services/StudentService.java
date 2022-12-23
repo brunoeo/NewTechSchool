@@ -5,8 +5,10 @@ import com.br.NewTechSchool.data.entities.Student;
 import com.br.NewTechSchool.data.repositories.CourseRepository;
 import com.br.NewTechSchool.data.repositories.StudentRepository;
 import com.br.NewTechSchool.domain.mappers.StudentMapper;
+import com.br.NewTechSchool.domain.mappers.StudentSmallMapper;
 import com.br.NewTechSchool.presentation.dto.IDTO;
 import com.br.NewTechSchool.presentation.dto.StudentDTO;
+import com.br.NewTechSchool.presentation.dto.StudentSmallPersonDTO;
 import com.br.NewTechSchool.presentation.util.ExceptionResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +27,7 @@ public class StudentService implements ICrudService {
     private final StudentMapper mapper;
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
+    private final StudentSmallMapper studentSmallMapper;
 
     @Transactional
     public IDTO save(IDTO idto) throws ExceptionResponse {
@@ -37,10 +40,10 @@ public class StudentService implements ICrudService {
         return mapper.toDTO(studentRepository.save(student));
     }
 
-    public List<StudentDTO> findAll(Pageable pageable) {
-        List<StudentDTO> dtos = new ArrayList<>();
+    public List<StudentSmallPersonDTO> findAll(Pageable pageable) {
+        List<StudentSmallPersonDTO> dtos = new ArrayList<>();
         studentRepository.findAll(pageable).forEach(
-                student -> dtos.add(mapper.toDTO(student))
+                student -> dtos.add(studentSmallMapper.toDTO(student))
         );
         return dtos;
     }
