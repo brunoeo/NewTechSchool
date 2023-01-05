@@ -75,7 +75,7 @@ public class CourseService implements ICrudService {
         Professor professor = professorRepository.findById(courseDTO.getProfessorId()).orElseThrow(
                 () -> new ExceptionResponse("Professor não encontrado!", HttpStatus.NOT_FOUND));
 
-        if (professor.getCourse() != null)
+        if (professor.getCourse() != null && professor.getCourse().getId() != courseDTO.getId())
             throw new ExceptionResponse(
                     "Professor já cadastrado ao curso " +
                             professor.getCourse().getName() + "!",
